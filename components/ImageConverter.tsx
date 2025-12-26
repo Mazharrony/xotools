@@ -18,6 +18,7 @@ export default function ImageConverter() {
   const [files, setFiles] = useState<ConvertedFile[]>([]);
   const [isConverting, setIsConverting] = useState(false);
   const [quality, setQuality] = useState(90);
+  const [backgroundColor, setBackgroundColor] = useState('#FFFFFF');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +39,7 @@ export default function ImageConverter() {
     }
   };
 
-  const convertPNGToJPEG = async (file: File, quality: number): Promise<{ dataUrl: string; blob: Blob }> => {
+  const convertPNGToJPEG = async (file: File, quality: number, bgColor: string): Promise<{ dataUrl: string; blob: Blob }> => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
@@ -52,7 +53,11 @@ export default function ImageConverter() {
           return;
         }
         
-        // Draw image on canvas
+        // Fill canvas with background color first
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw image on canvas (this will composite over the background)
         ctx.drawImage(img, 0, 0);
         
         // Convert to JPEG
@@ -84,7 +89,7 @@ export default function ImageConverter() {
     
     for (const fileItem of files) {
       try {
-        const { dataUrl, blob } = await convertPNGToJPEG(fileItem.file, quality);
+        const { dataUrl, blob } = await convertPNGToJPEG(fileItem.file, quality, backgroundColor);
         convertedFiles.push({
           ...fileItem,
           convertedDataUrl: dataUrl,
@@ -223,6 +228,44 @@ export default function ImageConverter() {
                   {files.length} file{files.length !== 1 ? 's' : ''} selected
                 </p>
               )}
+            </div>
+
+            {/* Background Color */}
+            <div className="mb-6">
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                Background Color
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="color"
+                  value={backgroundColor}
+                  onChange={(e) => setBackgroundColor(e.target.value)}
+                  className="w-16 h-12 border-2 border-gray-300 dark:border-gray-600 rounded-xl cursor-pointer hover:scale-105 transition-transform"
+                  title="Choose background color"
+                />
+                <input
+                  type="text"
+                  value={backgroundColor}
+                  onChange={(e) => setBackgroundColor(e.target.value)}
+                  className="flex-1 px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  placeholder="#FFFFFF"
+                />
+              </div>
+              <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                PNG transparency will be filled with this color
+              </p>
+              {/* Quick color presets */}
+              <div className="mt-3 flex gap-2 flex-wrap">
+                {['#FFFFFF', '#000000', '#F3F4F6', '#FEF3C7', '#DBEAFE'].map((color) => (
+                  <button
+                    key={color}
+                    onClick={() => setBackgroundColor(color)}
+                    className="w-8 h-8 rounded-lg border-2 border-gray-300 dark:border-gray-600 hover:scale-110 transition-transform"
+                    style={{ backgroundColor: color }}
+                    title={color}
+                  />
+                ))}
+              </div>
             </div>
 
             {/* Quality Slider */}
