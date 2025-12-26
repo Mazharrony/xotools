@@ -41,6 +41,7 @@ export default function BarcodeGenerator() {
       qrSize: 400,
       dotType: 'square',
       quietZone: 4,
+      logoSize: 15,
     },
   });
 
@@ -120,6 +121,7 @@ export default function BarcodeGenerator() {
           qrSize: 400,
           dotType: 'square',
           quietZone: 4,
+          logoSize: 15,
         };
       }
       

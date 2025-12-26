@@ -21,6 +21,8 @@ export interface QRCodeConfig {
   qrSize: number;
   dotType: QRDotType;
   quietZone: number;
+  logoUrl?: string; // Data URL or image URL for logo
+  logoSize?: number; // Size of logo as percentage of QR code (default: 15%)
 }
 
 export interface BarcodeConfig {

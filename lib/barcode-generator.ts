@@ -87,7 +87,7 @@ async function generateQRCode(value: string, config: BarcodeConfig): Promise<str
     const quietZone = config.qrConfig?.quietZone ?? config.margin;
     
     // Generate base QR code
-    const dataUrl = await QRCode.toDataURL(value, {
+    let dataUrl = await QRCode.toDataURL(value, {
       width: qrSize,
       margin: quietZone,
       errorCorrectionLevel: errorCorrectionLevel,
@@ -100,13 +100,111 @@ async function generateQRCode(value: string, config: BarcodeConfig): Promise<str
 
     // Apply dot type styling if rounded or dots
     if (config.qrConfig?.dotType && config.qrConfig.dotType !== 'square') {
-      return applyQRDotStyle(dataUrl, config.qrConfig.dotType, qrSize);
+      dataUrl = await applyQRDotStyle(dataUrl, config.qrConfig.dotType, qrSize);
+    }
+
+    // Add logo if provided
+    if (config.qrConfig?.logoUrl) {
+      dataUrl = await addLogoToQR(dataUrl, config.qrConfig.logoUrl, qrSize, config.qrConfig.logoSize || 15);
     }
 
     return dataUrl;
   } catch (error) {
     throw new Error('Failed to generate QR code');
   }
+}
+
+async function addLogoToQR(qrDataUrl: string, logoUrl: string, qrSize: number, logoSizePercent: number): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const qrImg = new Image();
+    qrImg.crossOrigin = 'anonymous';
+    
+    qrImg.onload = () => {
+      const logoImg = new Image();
+      logoImg.crossOrigin = 'anonymous';
+      
+      logoImg.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            reject(new Error('Could not get canvas context'));
+            return;
+          }
+
+          canvas.width = qrSize;
+          canvas.height = qrSize;
+
+          // Draw QR code
+          ctx.drawImage(qrImg, 0, 0, qrSize, qrSize);
+
+          // Calculate logo size (percentage of QR code size)
+          const logoSize = (qrSize * logoSizePercent) / 100;
+          const logoX = (qrSize - logoSize) / 2;
+          const logoY = (qrSize - logoSize) / 2;
+
+          // Draw white background circle/square for logo
+          ctx.fillStyle = '#FFFFFF';
+          ctx.beginPath();
+          // Use rounded rectangle for better appearance
+          const cornerRadius = logoSize * 0.15;
+          roundRect(ctx, logoX - 2, logoY - 2, logoSize + 4, logoSize + 4, cornerRadius);
+          ctx.fill();
+
+          // Draw logo with padding
+          const logoPadding = logoSize * 0.1;
+          const logoDrawSize = logoSize - (logoPadding * 2);
+          ctx.save();
+          ctx.globalCompositeOperation = 'source-over';
+          ctx.drawImage(
+            logoImg,
+            logoX + logoPadding,
+            logoY + logoPadding,
+            logoDrawSize,
+            logoDrawSize
+          );
+          ctx.restore();
+
+          resolve(canvas.toDataURL('image/png'));
+        } catch (error) {
+          reject(error);
+        }
+      };
+
+      logoImg.onerror = () => {
+        reject(new Error('Failed to load logo image'));
+      };
+
+      logoImg.src = logoUrl;
+    };
+
+    qrImg.onerror = () => {
+      reject(new Error('Failed to load QR code image'));
+    };
+
+    qrImg.src = qrDataUrl;
+  });
+}
+
+function roundRect(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  radius: number
+): void {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
 }
 
 function applyQRDotStyle(dataUrl: string, dotType: 'rounded' | 'dots', size: number): Promise<string> {
