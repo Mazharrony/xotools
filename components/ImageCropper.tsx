@@ -283,7 +283,7 @@ export default function ImageCropper() {
                     <div className="space-y-4">
                       <div className="relative rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-700">
                         <img
-                          ref={(el) => imageRefs.current[fileItem.id] = el}
+                          ref={(el) => { imageRefs.current[fileItem.id] = el; }}
                           src={fileItem.imageUrl}
                           alt="Original"
                           className="w-full h-auto max-h-96 object-contain"

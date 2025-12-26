@@ -78,16 +78,19 @@ export default function Header() {
               onMouseEnter={() => setAllToolsOpen(true)}
               onMouseLeave={() => setAllToolsOpen(false)}
             >
-              <button className="px-4 py-2 text-sm font-medium text-white bg-[#2563EB] rounded-lg hover:bg-[#1d4ed8] transition-colors flex items-center gap-1">
+              <button className="px-4 py-2 text-sm font-medium text-white bg-[#2563EB] rounded-lg hover:bg-[#1d4ed8] active:bg-[#1e40af] transition-all duration-200 ease-in-out flex items-center gap-1 shadow-sm hover:shadow-md">
                 All Tools
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className={`w-4 h-4 transition-transform duration-200 ${allToolsOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
               
               {allToolsOpen && (
-                <div className="absolute top-full right-0 mt-2 w-[800px] bg-white dark:bg-[#0B1220] border border-[#E5E7EB] dark:border-gray-800 rounded-lg shadow-xl z-50 max-h-[600px] overflow-y-auto">
-                  <div className="p-6 grid grid-cols-3 gap-6">
+                <>
+                  {/* Invisible bridge to prevent hover break */}
+                  <div className="absolute top-full right-0 w-full h-1" />
+                  <div className="absolute top-full right-0 mt-1 w-[800px] bg-white dark:bg-[#0B1220] border border-[#E5E7EB] dark:border-gray-800 rounded-lg shadow-xl z-50 max-h-[600px] overflow-y-auto transition-all duration-200 ease-in-out opacity-100">
+                    <div className="p-6 grid grid-cols-3 gap-6">
                     {/* Generators */}
                     <div>
                       <h3 className="text-sm font-semibold text-[#0F172A] dark:text-[#E5E7EB] uppercase mb-3 pb-2 border-b border-[#E5E7EB] dark:border-gray-800">
@@ -158,6 +161,7 @@ export default function Header() {
                     </div>
                   </div>
                 </div>
+                </>
               )}
             </div>
           </nav>
