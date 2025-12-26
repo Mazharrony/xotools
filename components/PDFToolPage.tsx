@@ -674,11 +674,9 @@ export default function PDFToolPage({ toolId, toolName, toolDescription, seoCont
                   { name: 'Merge PDF', href: '/pdf-tools/merge-pdf' },
                   { name: 'Split PDF', href: '/pdf-tools/split-pdf' },
                   { name: 'Compress PDF', href: '/pdf-tools/compress-pdf' },
-                  { name: 'Lock PDF', href: '/pdf-tools/lock-pdf' },
-                  { name: 'Unlock PDF', href: '/pdf-tools/unlock-pdf' },
                   { name: 'Add Page Numbers', href: '/pdf-tools/add-page-numbers' },
                   { name: 'Rotate PDF', href: '/pdf-tools/rotate-pdf' },
-                ].filter(tool => tool.href !== `/pdf-tools/${toolId === 'page-numbers' ? 'add-page-numbers' : toolId === 'merge' ? 'merge-pdf' : toolId === 'split' ? 'split-pdf' : toolId === 'compress' ? 'compress-pdf' : toolId === 'lock' ? 'lock-pdf' : toolId === 'unlock' ? 'unlock-pdf' : 'rotate-pdf'}`).map((tool) => (
+                ].filter(tool => tool.href !== `/pdf-tools/${toolId === 'page-numbers' ? 'add-page-numbers' : toolId === 'merge' ? 'merge-pdf' : toolId === 'split' ? 'split-pdf' : toolId === 'compress' ? 'compress-pdf' : 'rotate-pdf'}`).map((tool) => (
                   <Link
                     key={tool.href}
                     href={tool.href}
