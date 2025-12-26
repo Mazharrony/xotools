@@ -24,17 +24,13 @@ export default function Header() {
     { href: '/image-tools/resizer', label: 'Image Resizer', category: 'Image Tools', icon: '📏' },
     { href: '/image-tools/cropper', label: 'Image Cropper', category: 'Image Tools', icon: '✂️' },
     { href: '/image-tools/image-to-pdf', label: 'Image to PDF', category: 'Image Tools', icon: '📄' },
-    { href: '/image-tools/pdf-to-image', label: 'PDF to Image', category: 'Image Tools', icon: '🖼️' },
     { href: '/image-tools/heic-to-jpg', label: 'HEIC to JPG', category: 'Image Tools', icon: '📱' },
-    { href: '/image-tools/bg-remover', label: 'BG Remover', category: 'Image Tools', icon: '🎨' },
     { href: '/png-to-jpeg', label: 'PNG to JPEG', category: 'Image Tools', icon: '🖼️' },
     
     // PDF Tools
     { href: '/pdf-tools/merge-pdf', label: 'Merge PDF', category: 'PDF Tools', icon: '📄' },
     { href: '/pdf-tools/split-pdf', label: 'Split PDF', category: 'PDF Tools', icon: '✂️' },
     { href: '/pdf-tools/compress-pdf', label: 'Compress PDF', category: 'PDF Tools', icon: '📦' },
-    { href: '/pdf-tools/lock-pdf', label: 'Lock PDF', category: 'PDF Tools', icon: '🔒' },
-    { href: '/pdf-tools/unlock-pdf', label: 'Unlock PDF', category: 'PDF Tools', icon: '🔓' },
     { href: '/pdf-tools/add-page-numbers', label: 'Add Page Numbers', category: 'PDF Tools', icon: '🔢' },
     { href: '/pdf-tools/rotate-pdf', label: 'Rotate PDF', category: 'PDF Tools', icon: '🔄' },
   ];

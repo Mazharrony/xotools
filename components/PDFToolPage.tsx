@@ -6,8 +6,6 @@ import {
   mergePDFs,
   splitPDF,
   compressPDF,
-  lockPDF,
-  unlockPDF,
   addPageNumbers,
   rotatePDFPages,
 } from '@/lib/pdf-utils';
@@ -16,8 +14,6 @@ type PDFToolType =
   | 'merge' 
   | 'split' 
   | 'compress' 
-  | 'lock' 
-  | 'unlock' 
   | 'page-numbers' 
   | 'rotate';
 
@@ -56,13 +52,6 @@ export default function PDFToolPage({ toolId, toolName, toolDescription, seoCont
   
   // Compress settings
   const [compressionLevel, setCompressionLevel] = useState(80);
-  
-  // Lock settings
-  const [ownerPassword, setOwnerPassword] = useState('');
-  const [userPassword, setUserPassword] = useState('');
-  
-  // Unlock settings
-  const [unlockPassword, setUnlockPassword] = useState('');
   
   // Page numbers settings
   const [pageNumberPosition, setPageNumberPosition] = useState<'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'>('bottom');
@@ -178,48 +167,6 @@ export default function PDFToolPage({ toolId, toolName, toolDescription, seoCont
     setIsProcessing(false);
   };
 
-  const handleLock = async () => {
-    if (files.length === 0 || !ownerPassword) {
-      alert('Please select a PDF file and enter a password');
-      return;
-    }
-    
-    setIsProcessing(true);
-    try {
-      const lockedBlob = await lockPDF(files[0].file, ownerPassword, userPassword || undefined);
-      const url = URL.createObjectURL(lockedBlob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `${files[0].name.replace('.pdf', '')}-locked.pdf`;
-      link.click();
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      alert(error instanceof Error ? error.message : 'Locking failed');
-    }
-    setIsProcessing(false);
-  };
-
-  const handleUnlock = async () => {
-    if (files.length === 0 || !unlockPassword) {
-      alert('Please select a PDF file and enter the password');
-      return;
-    }
-    
-    setIsProcessing(true);
-    try {
-      const unlockedBlob = await unlockPDF(files[0].file, unlockPassword);
-      const url = URL.createObjectURL(unlockedBlob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `${files[0].name.replace('.pdf', '')}-unlocked.pdf`;
-      link.click();
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      alert(error instanceof Error ? error.message : 'Unlocking failed');
-    }
-    setIsProcessing(false);
-  };
-
   const handleAddPageNumbers = async () => {
     if (files.length === 0) {
       alert('Please select a PDF file');
@@ -292,9 +239,6 @@ export default function PDFToolPage({ toolId, toolName, toolDescription, seoCont
     setFiles([]);
     setSelectedFile(null);
     setSplitPages('');
-    setOwnerPassword('');
-    setUserPassword('');
-    setUnlockPassword('');
   };
 
   const renderToolControls = () => {
@@ -472,122 +416,6 @@ export default function PDFToolPage({ toolId, toolName, toolDescription, seoCont
               className="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transition-all shadow-lg"
             >
               {isProcessing ? 'Processing...' : 'Process PDF'}
-            </button>
-          </>
-        );
-      
-      case 'lock':
-        return (
-          <>
-            <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-                Select PDF File
-              </label>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="application/pdf"
-                onChange={handleFileSelect}
-                className="hidden"
-                id="file-upload"
-              />
-              <label
-                htmlFor="file-upload"
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all cursor-pointer text-center text-sm font-medium"
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                </svg>
-                Choose File
-              </label>
-            </div>
-            <div className="mb-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-              <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                <strong>Note:</strong> pdf-lib doesn&apos;t support password protection. For actual encryption, use specialized libraries or server-side processing.
-              </p>
-            </div>
-            <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-                Owner Password (Required)
-              </label>
-              <input
-                type="password"
-                value={ownerPassword}
-                onChange={(e) => setOwnerPassword(e.target.value)}
-                placeholder="Enter password"
-                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-                User Password (Optional)
-              </label>
-              <input
-                type="password"
-                value={userPassword}
-                onChange={(e) => setUserPassword(e.target.value)}
-                placeholder="Optional - for viewing only"
-                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              />
-            </div>
-            <button
-              onClick={handleLock}
-              disabled={files.length === 0 || !ownerPassword || isProcessing}
-              className="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transition-all shadow-lg"
-            >
-              {isProcessing ? 'Processing...' : 'Process PDF'}
-            </button>
-          </>
-        );
-      
-      case 'unlock':
-        return (
-          <>
-            <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-                Select PDF File
-              </label>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="application/pdf"
-                onChange={handleFileSelect}
-                className="hidden"
-                id="file-upload"
-              />
-              <label
-                htmlFor="file-upload"
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all cursor-pointer text-center text-sm font-medium"
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                </svg>
-                Choose File
-              </label>
-            </div>
-            <div className="mb-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-              <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                <strong>Note:</strong> pdf-lib has limited support for password-protected PDFs. For reliable unlocking, use specialized tools or server-side processing.
-              </p>
-            </div>
-            <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-                PDF Password
-              </label>
-              <input
-                type="password"
-                value={unlockPassword}
-                onChange={(e) => setUnlockPassword(e.target.value)}
-                placeholder="Enter PDF password"
-                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              />
-            </div>
-            <button
-              onClick={handleUnlock}
-              disabled={files.length === 0 || !unlockPassword || isProcessing}
-              className="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transition-all shadow-lg"
-            >
-              {isProcessing ? 'Unlocking...' : 'Unlock PDF'}
             </button>
           </>
         );

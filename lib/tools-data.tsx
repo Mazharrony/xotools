@@ -81,28 +81,12 @@ export const tools: Tool[] = [
     icon: 'imagePdf',
   },
   {
-    id: 'pdf-to-image',
-    title: 'PDF to Image',
-    description: 'Convert PDF pages to images',
-    href: routes.imageTools.pdfToImage,
-    category: 'image',
-    icon: 'image',
-  },
-  {
     id: 'heic-to-jpg',
     title: 'HEIC to JPG',
     description: 'Convert HEIC images to JPG format',
     href: routes.imageTools.heicToJpg,
     category: 'image',
     icon: 'convert',
-  },
-  {
-    id: 'bg-remover',
-    title: 'Background Remover',
-    description: 'Remove backgrounds from images automatically',
-    href: routes.imageTools.bgRemover,
-    category: 'image',
-    icon: 'image',
   },
   
   // PDF Tools - Detail Pages
@@ -124,25 +108,9 @@ export const tools: Tool[] = [
   },
   {
     id: 'compress-pdf',
-    title: 'Compress PDF',
-    description: 'Reduce PDF file size without losing quality',
+    title: 'Optimize PDF (Light)',
+    description: 'Rebuild PDF with limited compression - best for image-heavy PDFs',
     href: routes.pdfTools.compress,
-    category: 'pdf',
-    icon: 'pdf',
-  },
-  {
-    id: 'lock-pdf',
-    title: 'Lock PDF',
-    description: 'Add password protection to secure PDF files',
-    href: routes.pdfTools.lock,
-    category: 'pdf',
-    icon: 'pdf',
-  },
-  {
-    id: 'unlock-pdf',
-    title: 'Unlock PDF',
-    description: 'Remove password protection from PDF files',
-    href: routes.pdfTools.unlock,
     category: 'pdf',
     icon: 'pdf',
   },
@@ -161,6 +129,44 @@ export const tools: Tool[] = [
     href: routes.pdfTools.addPageNumbers,
     category: 'pdf',
     icon: 'pdf',
+  },
+  
+  // Text Tools
+  {
+    id: 'word-counter',
+    title: 'Word Counter',
+    description: 'Count words, characters, sentences, and paragraphs',
+    href: routes.textTools.wordCounter,
+    category: 'text',
+    icon: 'text',
+  },
+  {
+    id: 'case-converter',
+    title: 'Case Converter',
+    description: 'Convert text between uppercase, lowercase, title case, and more',
+    href: routes.textTools.caseConverter,
+    category: 'text',
+    icon: 'text',
+  },
+  
+  // Developer Tools
+  {
+    id: 'json-formatter',
+    title: 'JSON Formatter',
+    description: 'Format, minify, and validate JSON data',
+    href: routes.developerTools.jsonFormatter,
+    category: 'developer',
+    icon: 'code',
+  },
+  
+  // Calculators
+  {
+    id: 'vat-calculator',
+    title: 'VAT Calculator',
+    description: 'Calculate VAT and percentages - add or remove VAT',
+    href: routes.calculators.vatCalculator,
+    category: 'calculator',
+    icon: 'calculator',
   },
 ];
 

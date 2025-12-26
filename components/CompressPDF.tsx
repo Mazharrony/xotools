@@ -67,7 +67,7 @@ export default function CompressPDF() {
     if (!fileItem.processedBlob) return;
 
     const originalName = fileItem.name.replace('.pdf', '');
-    const newFileName = `${originalName}-compressed.pdf`;
+    const newFileName = `${originalName}-optimized.pdf`;
 
     const url = URL.createObjectURL(fileItem.processedBlob);
     const a = document.createElement('a');
@@ -103,10 +103,10 @@ export default function CompressPDF() {
       <div className="container mx-auto px-4 py-12 max-w-7xl">
         <section className="mb-12 text-center animate-fade-in">
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
-            Compress PDF Online - Free PDF Compressor Tool
+            Optimize PDF (Light) - Free PDF Optimizer Tool
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-6 leading-relaxed">
-            Reduce PDF file size without compromising quality using our free online PDF compressor. Perfect for email attachments, file sharing, or saving storage space. Process files instantly in your browser.
+            Lightly optimize and rebuild PDF files using our free online PDF optimizer. Best results for image-heavy PDFs. Note: This tool performs limited compression - for better results, specialized tools may be needed. Process files instantly in your browser.
           </p>
         </section>
 
@@ -118,7 +118,7 @@ export default function CompressPDF() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                 </svg>
               </div>
-              Compress PDF
+              Optimize PDF (Light)
             </h2>
 
             <div className="mb-6">
@@ -150,9 +150,9 @@ export default function CompressPDF() {
               )}
             </div>
 
-            <div className="mb-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-              <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                <strong>Note:</strong> pdf-lib doesn&apos;t support PDF compression directly. The file will be processed but compression may be limited. For better compression, consider using specialized tools.
+            <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+              <p className="text-sm text-blue-800 dark:text-blue-200">
+                <strong>Best results for image-heavy PDFs.</strong> This tool performs limited compression by rebuilding the PDF structure. For better compression, specialized server-side tools may be needed.
               </p>
             </div>
 
@@ -182,7 +182,7 @@ export default function CompressPDF() {
               disabled={files.length === 0 || isProcessing}
               className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors mb-4"
             >
-              {isProcessing ? 'Compressing...' : 'Compress PDFs'}
+              {isProcessing ? 'Optimizing...' : 'Optimize PDFs'}
             </button>
 
             {files.length > 0 && (
@@ -241,7 +241,7 @@ export default function CompressPDF() {
                     <div className="space-y-4">
                       <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
                         <p className="text-green-700 dark:text-green-300 text-sm">
-                          <strong>Compressed!</strong> File size reduced by {Math.round((1 - fileItem.processedSize! / fileItem.originalSize) * 100)}%
+                          <strong>Optimized!</strong> {fileItem.processedSize! < fileItem.originalSize ? `File size reduced by ${Math.round((1 - fileItem.processedSize! / fileItem.originalSize) * 100)}%` : 'PDF has been rebuilt and optimized'}
                         </p>
                       </div>
                       <button
@@ -251,12 +251,12 @@ export default function CompressPDF() {
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                         </svg>
-                        Download Compressed PDF
+                        Download Optimized PDF
                       </button>
                     </div>
                   ) : (
                     <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-8 text-center">
-                      <p className="text-gray-600 dark:text-gray-400">Ready to compress</p>
+                      <p className="text-gray-600 dark:text-gray-400">Ready to optimize</p>
                     </div>
                   )}
                 </div>

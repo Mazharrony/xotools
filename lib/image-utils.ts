@@ -262,16 +262,7 @@ export async function imageToPDF(
 }
 
 // PDF to Image (extract first page as image)
-export async function pdfToImage(file: File): Promise<{ blob: Blob; dataUrl: string }> {
-  // Note: Full PDF to image requires PDF.js library
-  // This is a placeholder - you'll need to add pdf.js-dist package
-  return new Promise((resolve, reject) => {
-    // For now, we'll show a message that PDF.js is needed
-    reject(new Error('PDF to Image conversion requires PDF.js library. Please install pdf.js-dist package.'));
-  });
-}
-
-// HEIC to JPG (requires heic2any library)
+// HEIC to JPG (requires heic2any library - client-side only)
 export async function heicToJpg(file: File): Promise<{ blob: Blob; dataUrl: string }> {
   try {
     // Dynamically import heic2any to avoid SSR issues

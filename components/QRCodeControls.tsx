@@ -19,14 +19,14 @@ export default function QRCodeControls({
   error,
 }: QRCodeControlsProps) {
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-          <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <div className="space-y-4 md:space-y-6">
+      <div className="flex items-center gap-2 md:gap-3 mb-2">
+        <div className="p-1.5 md:p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+          <svg className="w-4 h-4 md:w-5 md:h-5 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
           </svg>
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
           QR Code Configuration
         </h2>
       </div>
@@ -53,7 +53,7 @@ export default function QRCodeControls({
           value={config.value}
           onChange={(e) => onChange({ value: e.target.value })}
           placeholder="Enter URL, text, or any content"
-          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+          className="w-full px-3 md:px-4 py-2.5 md:py-3 border border-gray-300 dark:border-gray-600 rounded-lg md:rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 text-sm md:text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
         />
         <p className="mt-2 text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -73,25 +73,25 @@ export default function QRCodeControls({
         </label>
         <div>
           <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1.5">Size (px)</label>
-          <input
-            type="number"
-            min="200"
-            max="1000"
-            step="50"
-            value={config.qrConfig?.qrSize || 400}
-            onChange={(e) => onChange({
-              qrConfig: {
-                ...config.qrConfig,
-                qrSize: parseInt(e.target.value) || 400,
-                errorCorrectionLevel: config.qrConfig?.errorCorrectionLevel || 'M',
-                dotType: config.qrConfig?.dotType || 'square',
-                quietZone: config.qrConfig?.quietZone ?? 4,
-                logoUrl: config.qrConfig?.logoUrl,
-                logoSize: config.qrConfig?.logoSize || 15,
-              }
-            })}
-            className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-          />
+            <input
+              type="number"
+              min="200"
+              max="1000"
+              step="50"
+              value={config.qrConfig?.qrSize || 400}
+              onChange={(e) => onChange({
+                qrConfig: {
+                  ...config.qrConfig,
+                  qrSize: parseInt(e.target.value) || 400,
+                  errorCorrectionLevel: config.qrConfig?.errorCorrectionLevel || 'M',
+                  dotType: config.qrConfig?.dotType || 'square',
+                  quietZone: config.qrConfig?.quietZone ?? 4,
+                  logoUrl: config.qrConfig?.logoUrl,
+                  logoSize: config.qrConfig?.logoSize || 15,
+                }
+              })}
+              className="w-full px-3 md:px-4 py-2 md:py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg md:rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm md:text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+            />
           <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
             Recommended: 400-600px for best quality
           </p>
@@ -106,7 +106,7 @@ export default function QRCodeControls({
           </svg>
           Error Correction Level
         </label>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {(['L', 'M', 'Q', 'H'] as const).map((level) => (
             <button
               key={level}
@@ -121,7 +121,7 @@ export default function QRCodeControls({
                   logoSize: config.qrConfig?.logoSize || 15,
                 }
               })}
-              className={`px-3 py-2.5 rounded-xl font-semibold text-sm transition-all ${
+              className={`px-3 py-2.5 md:py-3 rounded-lg md:rounded-xl font-semibold text-xs md:text-sm transition-all ${
                 config.qrConfig?.errorCorrectionLevel === level
                   ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30 scale-105'
                   : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 hover:scale-102'
@@ -168,7 +168,7 @@ export default function QRCodeControls({
                   logoSize: config.qrConfig?.logoSize || 15,
                 }
               })}
-              className={`px-3 py-2.5 rounded-xl font-semibold text-sm transition-all capitalize ${
+              className={`px-2 md:px-3 py-2 md:py-2.5 rounded-lg md:rounded-xl font-semibold text-xs md:text-sm transition-all capitalize ${
                 config.qrConfig?.dotType === dotType
                   ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30 scale-105'
                   : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 hover:scale-102'
@@ -205,7 +205,7 @@ export default function QRCodeControls({
               logoSize: config.qrConfig?.logoSize || 15,
             }
           })}
-          className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+          className="w-full px-3 md:px-4 py-2 md:py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg md:rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm md:text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
         />
         <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
           Recommended: 4 modules (standard QR code margin)
@@ -251,7 +251,7 @@ export default function QRCodeControls({
             />
             <label
               htmlFor="qr-logo-upload"
-              className="flex-1 px-4 py-2.5 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all cursor-pointer text-center text-sm font-medium"
+              className="flex-1 px-3 md:px-4 py-2 md:py-2.5 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg md:rounded-xl bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all cursor-pointer text-center text-xs md:text-sm font-medium"
             >
               {config.qrConfig?.logoUrl ? 'Change Logo' : 'Upload Logo'}
             </label>
@@ -338,7 +338,7 @@ export default function QRCodeControls({
           </svg>
           Colors
         </label>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
           <div>
             <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1.5">QR Code Color</label>
             <div className="flex gap-2">
@@ -346,13 +346,13 @@ export default function QRCodeControls({
                 type="color"
                 value={config.fontColor}
                 onChange={(e) => onChange({ fontColor: e.target.value })}
-                className="w-14 h-11 border-2 border-gray-300 dark:border-gray-600 rounded-xl cursor-pointer hover:scale-105 transition-transform"
+                className="w-12 h-10 md:w-14 md:h-11 border-2 border-gray-300 dark:border-gray-600 rounded-lg md:rounded-xl cursor-pointer hover:scale-105 transition-transform flex-shrink-0"
               />
               <input
                 type="text"
                 value={config.fontColor}
                 onChange={(e) => onChange({ fontColor: e.target.value })}
-                className="flex-1 px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="flex-1 px-3 py-2 md:py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg md:rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-xs md:text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
               />
             </div>
           </div>
@@ -363,13 +363,13 @@ export default function QRCodeControls({
                 type="color"
                 value={config.backgroundColor}
                 onChange={(e) => onChange({ backgroundColor: e.target.value })}
-                className="w-14 h-11 border-2 border-gray-300 dark:border-gray-600 rounded-xl cursor-pointer hover:scale-105 transition-transform"
+                className="w-12 h-10 md:w-14 md:h-11 border-2 border-gray-300 dark:border-gray-600 rounded-lg md:rounded-xl cursor-pointer hover:scale-105 transition-transform flex-shrink-0"
               />
               <input
                 type="text"
                 value={config.backgroundColor}
                 onChange={(e) => onChange({ backgroundColor: e.target.value })}
-                className="flex-1 px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="flex-1 px-3 py-2 md:py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg md:rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-xs md:text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
               />
             </div>
           </div>
@@ -384,12 +384,12 @@ export default function QRCodeControls({
           </svg>
           Export Format
         </label>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {(['png', 'jpeg', 'svg', 'pdf'] as ExportFormat[]).map((format) => (
             <button
               key={format}
               onClick={() => onChange({ format })}
-              className={`px-3 py-2.5 rounded-xl font-semibold text-sm transition-all ${
+              className={`px-2 md:px-3 py-2 md:py-2.5 rounded-lg md:rounded-xl font-semibold text-xs md:text-sm transition-all ${
                 config.format === format
                   ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30 scale-105'
                   : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 hover:scale-102'
@@ -402,13 +402,13 @@ export default function QRCodeControls({
       </div>
 
       {/* Export Buttons */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
         {(['png', 'jpeg', 'svg', 'pdf'] as const).map((format) => (
           <button
             key={format}
             onClick={() => onExport(format)}
             disabled={!hasBarcode}
-            className="px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transition-all shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+            className="px-3 md:px-4 py-2.5 md:py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg md:rounded-xl font-semibold text-sm md:text-base hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transition-all shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />

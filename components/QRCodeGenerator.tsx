@@ -106,19 +106,19 @@ export default function QRCodeGenerator() {
               </svg>
               QR Code Generator
             </div>
-            <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent leading-tight">
-              Free QR Code<br />Generator
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent leading-tight">
+              Free QR Code<br className="hidden sm:inline" /> Generator
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-6 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-6 leading-relaxed px-4">
               Create custom QR codes instantly. Add logos, customize colors, choose styles, and download in multiple formats. Perfect for marketing, business cards, and more.
             </p>
           </div>
         </section>
 
         {/* Main Content */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-12 md:mb-16">
           {/* Controls Panel */}
-          <div className="lg:col-span-1 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl border border-gray-200/60 dark:border-gray-700/60 p-8">
+          <div className="lg:col-span-1 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl border border-gray-200/60 dark:border-gray-700/60 p-4 md:p-6 lg:p-8">
             <QRCodeControls
               config={config}
               onChange={handleConfigChange}
@@ -130,24 +130,25 @@ export default function QRCodeGenerator() {
           </div>
 
           {/* Preview Panel */}
-          <div className="lg:col-span-2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl border border-gray-200/60 dark:border-gray-700/60 p-8">
+          <div className="lg:col-span-2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl border border-gray-200/60 dark:border-gray-700/60 p-4 md:p-6 lg:p-8">
             <BarcodePreview
               dataUrl={barcodeDataUrl}
               isGenerating={isGenerating}
               error={error}
+              type="qrcode"
             />
           </div>
         </div>
 
         {/* Batch Generator */}
-        <div className="mb-16 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl border border-gray-200/60 dark:border-gray-700/60 p-8">
+        <div className="mb-12 md:mb-16 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl border border-gray-200/60 dark:border-gray-700/60 p-4 md:p-6 lg:p-8">
           <BatchGenerator config={config} />
         </div>
 
         {/* SEO Content */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-16">
+        <div className="grid lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 mb-12 md:mb-16">
           {/* Features */}
-          <section className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl border border-gray-200/60 dark:border-gray-700/60 p-8">
+          <section className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl border border-gray-200/60 dark:border-gray-700/60 p-4 md:p-6 lg:p-8">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Key Features</h2>
             <ul className="space-y-3">
               <li className="flex items-start gap-3 text-gray-700 dark:text-gray-300">
@@ -184,7 +185,7 @@ export default function QRCodeGenerator() {
           </section>
 
           {/* Use Cases */}
-          <section className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl border border-gray-200/60 dark:border-gray-700/60 p-8">
+          <section className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl border border-gray-200/60 dark:border-gray-700/60 p-4 md:p-6 lg:p-8">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Common Use Cases</h2>
             <ul className="space-y-3">
               <li className="flex items-start gap-3 text-gray-700 dark:text-gray-300">
@@ -222,7 +223,7 @@ export default function QRCodeGenerator() {
         </div>
 
         {/* Related Tools */}
-        <section className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl border border-gray-200/60 dark:border-gray-700/60 p-8">
+        <section className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl border border-gray-200/60 dark:border-gray-700/60 p-4 md:p-6 lg:p-8">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Related Tools</h2>
           <div className="flex flex-wrap gap-4">
             <Link

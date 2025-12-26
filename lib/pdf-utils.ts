@@ -58,39 +58,6 @@ export async function compressPDF(file: File, quality: number): Promise<Blob> {
   return new Blob([pdfBytes], { type: 'application/pdf' });
 }
 
-// Lock PDF with password
-export async function lockPDF(file: File, ownerPassword: string, userPassword?: string): Promise<Blob> {
-  const arrayBuffer = await file.arrayBuffer();
-  const pdf = await PDFDocument.load(arrayBuffer);
-  
-  // pdf-lib doesn't support password protection directly
-  // This would require additional encryption libraries or server-side processing
-  // For now, we'll return the PDF as-is with a note
-  const pdfBytes = await pdf.save();
-  
-  // Note: Actual password protection requires PDF encryption which pdf-lib doesn't support
-  // You would need to use a different library or server-side service
-  // @ts-expect-error - Uint8Array is valid for Blob but TypeScript types are strict
-  return new Blob([pdfBytes], { type: 'application/pdf' });
-}
-
-// Unlock PDF
-export async function unlockPDF(file: File, password: string): Promise<Blob> {
-  try {
-    const arrayBuffer = await file.arrayBuffer();
-    // Try to load with password (pdf-lib doesn't support password-protected PDFs directly)
-    const pdf = await PDFDocument.load(arrayBuffer, { 
-      ignoreEncryption: true,
-      // Note: pdf-lib has limited support for encrypted PDFs
-    });
-    const pdfBytes = await pdf.save();
-    // @ts-expect-error - Uint8Array is valid for Blob but TypeScript types are strict
-    return new Blob([pdfBytes], { type: 'application/pdf' });
-  } catch (error) {
-    throw new Error('Failed to unlock PDF. pdf-lib has limited support for password-protected PDFs. Consider using a server-side solution.');
-  }
-}
-
 // Add page numbers
 export async function addPageNumbers(file: File, options: {
   position: 'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';

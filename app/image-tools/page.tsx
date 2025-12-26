@@ -4,8 +4,8 @@ import { siteUrl } from '@/lib/seo-config';
 
 export const metadata: Metadata = {
   title: "Image Tools - Free Online Image Utilities | Compress, Convert, Resize & More",
-  description: "Free online image tools: Compress, convert (JPG/PNG/WEBP), resize, crop, remove background, convert to PDF, and more. All tools work in your browser - no uploads, completely secure.",
-  keywords: "image tools, image compressor, image converter, image resizer, image cropper, image to pdf, pdf to image, heic converter, background remover",
+  description: "Free online image tools: Compress, convert (JPG/PNG/WEBP), resize, crop, convert to PDF, and more. All tools work in your browser - no uploads, completely secure.",
+  keywords: "image tools, image compressor, image converter, image resizer, image cropper, image to pdf, heic converter",
   alternates: {
     canonical: `${siteUrl}/image-tools`,
   },
@@ -53,25 +53,11 @@ const tools = [
     features: ["Multiple formats", "Multi-page PDFs", "High quality"]
   },
   {
-    name: "PDF to Image",
-    description: "Convert PDF pages to images",
-    href: "/image-tools/pdf-to-image",
-    icon: "🖼️",
-    features: ["Page extraction", "JPG/PNG output", "Batch processing"]
-  },
-  {
     name: "HEIC to JPG",
     description: "Convert HEIC images to JPG format",
     href: "/image-tools/heic-to-jpg",
     icon: "📱",
     features: ["iPhone photos", "Batch conversion", "High quality"]
-  },
-  {
-    name: "Background Remover",
-    description: "Remove backgrounds from images automatically",
-    href: "/image-tools/bg-remover",
-    icon: "🎨",
-    features: ["Automatic detection", "Transparent PNG", "Precise edges"]
   },
 ];
 
@@ -92,7 +78,7 @@ export default function ImageToolsPage() {
               Free Image Tools<br />for Everyone
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-6 leading-relaxed">
-              Complete suite of image utilities - compress, convert, resize, crop, remove backgrounds, convert to PDF, and more. All tools work in your browser, completely free, no registration required.
+              Complete suite of image utilities - compress, convert, resize, crop, convert to PDF, and more. All tools work in your browser, completely free, no registration required.
             </p>
           </div>
         </section>

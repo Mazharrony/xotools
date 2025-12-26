@@ -4,14 +4,14 @@ import { siteUrl } from '@/lib/seo-config';
 
 export const metadata: Metadata = {
   title: "PDF Tools - Free Online PDF Utilities | Merge, Split, Compress & More",
-  description: "Free online PDF tools: Merge, split, compress, lock, unlock, add page numbers, and rotate PDF pages. All tools work in your browser - no uploads, completely secure.",
-  keywords: "pdf tools, merge pdf, split pdf, compress pdf, lock pdf, unlock pdf, pdf utilities, free pdf tools, online pdf tools",
+  description: "Free online PDF tools: Merge, split, compress, add page numbers, and rotate PDF pages. All tools work in your browser - no uploads, completely secure.",
+  keywords: "pdf tools, merge pdf, split pdf, compress pdf, pdf utilities, free pdf tools, online pdf tools",
   alternates: {
     canonical: `${siteUrl}/pdf-tools`,
   },
   openGraph: {
     title: "PDF Tools - Free Online PDF Utilities",
-    description: "Free online PDF tools: Merge, split, compress, lock, unlock, and more. All tools work in your browser.",
+    description: "Free online PDF tools: Merge, split, compress, and more. All tools work in your browser.",
     url: `${siteUrl}/pdf-tools`,
   },
 };
@@ -33,24 +33,10 @@ const tools = [
   },
   {
     name: "Compress PDF",
-    description: "Reduce PDF file size without losing quality",
+    description: "Optimize PDF files (limited compression)",
     href: "/pdf-tools/compress-pdf",
     icon: "📦",
-    features: ["Reduce file size", "Adjustable compression", "Fast processing"]
-  },
-  {
-    name: "Lock PDF",
-    description: "Add password protection to secure PDF files",
-    href: "/pdf-tools/lock-pdf",
-    icon: "🔒",
-    features: ["Owner & user passwords", "Strong encryption", "Secure documents"]
-  },
-  {
-    name: "Unlock PDF",
-    description: "Remove password protection from PDF files",
-    href: "/pdf-tools/unlock-pdf",
-    icon: "🔓",
-    features: ["Remove passwords", "Maintain quality", "Fast unlocking"]
+    features: ["Rebuild PDF", "Optimize structure", "Fast processing"]
   },
   {
     name: "Add Page Numbers",
@@ -85,7 +71,7 @@ export default function PDFToolsPage() {
               Free PDF Tools<br />for Everyone
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-6 leading-relaxed">
-              Complete suite of PDF utilities - merge, split, compress, lock, unlock, add page numbers, and rotate. All tools work in your browser, completely free, no registration required.
+              Complete suite of PDF utilities - merge, split, compress, add page numbers, and rotate. All tools work in your browser, completely free, no registration required.
             </p>
           </div>
         </section>

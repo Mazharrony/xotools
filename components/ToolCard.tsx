@@ -5,15 +5,25 @@ interface ToolCardProps {
   title: string;
   description: string;
   href: string;
+  badge?: string;
 }
 
-export default function ToolCard({ icon, title, description, href }: ToolCardProps) {
+export default function ToolCard({ icon, title, description, href, badge }: ToolCardProps) {
   return (
     <Link
       href={href}
-      className="group block h-[160px] md:h-[180px] p-4 md:p-5 bg-white dark:bg-[#111827] border border-[#E5E7EB] dark:border-gray-700 rounded-xl hover:shadow-md hover:border-[#2563EB] dark:hover:border-[#3B82F6] transition-all duration-200"
+      className="group block h-[160px] md:h-[180px] p-4 md:p-5 bg-white dark:bg-[#111827] border border-[#E5E7EB] dark:border-gray-700 rounded-[12px] hover:shadow-lg hover:border-[#2563EB] dark:hover:border-[#3B82F6] hover:-translate-y-1 transition-all duration-200 relative"
     >
       <div className="flex flex-col h-full">
+        {/* Badge */}
+        {badge && (
+          <div className="absolute top-2 right-2">
+            <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">
+              {badge}
+            </span>
+          </div>
+        )}
+        
         {/* Icon */}
         <div className="mb-3 text-[#2563EB] dark:text-[#3B82F6] group-hover:scale-110 transition-transform">
           {icon}

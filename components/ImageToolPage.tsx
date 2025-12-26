@@ -245,10 +245,8 @@ export default function ImageToolPage({ toolId, toolName, toolDescription, seoCo
                   { name: 'Image Resizer', href: '/image-tools/resizer' },
                   { name: 'Image Cropper', href: '/image-tools/cropper' },
                   { name: 'Image to PDF', href: '/image-tools/image-to-pdf' },
-                  { name: 'PDF to Image', href: '/image-tools/pdf-to-image' },
                   { name: 'HEIC to JPG', href: '/image-tools/heic-to-jpg' },
-                  { name: 'BG Remover', href: '/image-tools/bg-remover' },
-                ].filter(tool => tool.href !== `/image-tools/${toolId === 'compressor' ? 'compressor' : toolId === 'converter' ? 'converter' : toolId === 'resizer' ? 'resizer' : toolId === 'cropper' ? 'cropper' : toolId === 'to-pdf' ? 'image-to-pdf' : toolId === 'from-pdf' ? 'pdf-to-image' : toolId === 'heic' ? 'heic-to-jpg' : 'bg-remover'}`).map((tool) => (
+                ].filter(tool => tool.href !== `/image-tools/${toolId === 'compressor' ? 'compressor' : toolId === 'converter' ? 'converter' : toolId === 'resizer' ? 'resizer' : toolId === 'cropper' ? 'cropper' : toolId === 'to-pdf' ? 'image-to-pdf' : toolId === 'heic' ? 'heic-to-jpg' : ''}`).map((tool) => (
                   <Link
                     key={tool.href}
                     href={tool.href}

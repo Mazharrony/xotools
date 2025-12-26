@@ -4,13 +4,16 @@ interface BarcodePreviewProps {
   dataUrl: string;
   isGenerating: boolean;
   error: string;
+  type?: 'barcode' | 'qrcode';
 }
 
 export default function BarcodePreview({
   dataUrl,
   isGenerating,
   error,
+  type = 'barcode',
 }: BarcodePreviewProps) {
+  const label = type === 'qrcode' ? 'QR code' : 'barcode';
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3 mb-2">
@@ -25,13 +28,13 @@ export default function BarcodePreview({
         </h2>
       </div>
 
-      <div className="flex items-center justify-center min-h-[400px] bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/30 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950/30 rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-700 p-8 relative overflow-hidden group">
+      <div className="flex items-center justify-center min-h-[300px] sm:min-h-[350px] md:min-h-[400px] bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/30 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950/30 rounded-xl md:rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-700 p-4 md:p-6 lg:p-8 relative overflow-hidden group">
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         {isGenerating ? (
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600 dark:text-gray-400">Generating barcode...</p>
+            <p className="text-gray-600 dark:text-gray-400">Generating {label}...</p>
           </div>
         ) : error ? (
           <div className="text-center text-red-600 dark:text-red-400">
@@ -56,7 +59,7 @@ export default function BarcodePreview({
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={dataUrl}
-                alt="Barcode preview"
+                alt={`${type === 'qrcode' ? 'QR code' : 'Barcode'} preview`}
                 className="max-w-full h-auto rounded-lg"
                 style={{ imageRendering: 'crisp-edges' }}
               />
@@ -66,7 +69,7 @@ export default function BarcodePreview({
                 if (dataUrl) {
                   const link = document.createElement('a');
                   link.href = dataUrl;
-                  link.download = `barcode-${Date.now()}.png`;
+                  link.download = `${type === 'qrcode' ? 'qr-code' : 'barcode'}-${Date.now()}.png`;
                   link.click();
                 }
               }}
@@ -95,8 +98,8 @@ export default function BarcodePreview({
                 />
               </svg>
             </div>
-            <p className="text-base font-medium">Enter a value to generate barcode</p>
-            <p className="text-sm mt-2 text-gray-400 dark:text-gray-600">Your barcode will appear here</p>
+            <p className="text-base font-medium">Enter a value to generate {label}</p>
+            <p className="text-sm mt-2 text-gray-400 dark:text-gray-600">Your {label} will appear here</p>
           </div>
         )}
       </div>
