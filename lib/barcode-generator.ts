@@ -4,19 +4,22 @@ import JsBarcode from 'jsbarcode';
 import QRCode from 'qrcode';
 import { BarcodeConfig, BarcodeType, QRErrorCorrectionLevel } from './types';
 
-export async function generateBarcode(config: BarcodeConfig): Promise<string> {
+export async function generateBarcode(config: BarcodeConfig, includeText: boolean = true): Promise<string> {
   const { type, value } = config;
 
   if (type === 'qrcode') {
     return generateQRCode(value, config);
   }
 
-  return generateLinearBarcode(config);
+  return generateLinearBarcode(config, includeText);
 }
 
-function generateLinearBarcode(config: BarcodeConfig): Promise<string> {
+function generateLinearBarcode(config: BarcodeConfig, includeText: boolean = true): Promise<string> {
   return new Promise((resolve, reject) => {
     try {
+      // Use higher resolution for better text quality
+      const scale = includeText ? 3 : 1; // 3x scale for crisp text rendering
+      
       // Create a canvas element that will be rendered off-screen
       const canvas = document.createElement('canvas');
       
@@ -25,8 +28,9 @@ function generateLinearBarcode(config: BarcodeConfig): Promise<string> {
       container.style.position = 'absolute';
       container.style.left = '-9999px';
       container.style.top = '-9999px';
-      container.style.width = '400px';
-      container.style.height = `${config.height + 40}px`;
+      // Let JsBarcode determine the natural width
+      container.style.width = 'auto';
+      container.style.height = 'auto';
       container.appendChild(canvas);
       document.body.appendChild(container);
       
@@ -46,21 +50,40 @@ function generateLinearBarcode(config: BarcodeConfig): Promise<string> {
         } = {
           format: config.type,
           width: config.width,
-          height: config.height,
-          displayValue: config.displayValue,
-          fontSize: config.fontSize,
+          height: config.height * scale, // Scale height for higher resolution
+          displayValue: includeText && config.displayValue,
+          fontSize: config.fontSize * scale, // Scale font size for higher resolution
           font: 'Arial',
-          textMargin: config.margin / 2,
-          margin: config.margin,
+          textMargin: (config.margin / 2) * scale,
+          margin: config.margin * scale,
           background: config.backgroundColor,
-          lineColor: config.fontColor,
+          lineColor: config.lineColor,
           fontOptions: 'bold',
         };
 
         JsBarcode(canvas, config.value, options);
         
+        // If we scaled, create a properly sized output canvas
+        let outputCanvas = canvas;
+        if (scale > 1) {
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            // Create output canvas at display size
+            outputCanvas = document.createElement('canvas');
+            outputCanvas.width = Math.round(canvas.width / scale);
+            outputCanvas.height = Math.round(canvas.height / scale);
+            const outputCtx = outputCanvas.getContext('2d');
+            if (outputCtx) {
+              // Use high-quality image scaling
+              outputCtx.imageSmoothingEnabled = true;
+              outputCtx.imageSmoothingQuality = 'high';
+              outputCtx.drawImage(canvas, 0, 0, outputCanvas.width, outputCanvas.height);
+            }
+          }
+        }
+        
         // Convert canvas to data URL
-        const dataUrl = canvas.toDataURL('image/png');
+        const dataUrl = outputCanvas.toDataURL('image/png');
         
         // Clean up
         document.body.removeChild(container);
